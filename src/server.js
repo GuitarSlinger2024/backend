@@ -50,7 +50,7 @@ app.get('/api/favorites/:userId', async (req, res) => {
     const { userId } = req.params
     const userFavorites = await db
       .select()
-      .from(favoritesTable)
+      .from(favoritesTable)   
       .where(eq(favoritesTable.userId, userId))
     res.json(userFavorites)
   } catch (error) {
