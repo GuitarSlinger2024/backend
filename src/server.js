@@ -3,10 +3,13 @@ import { ENV } from './config/env.js'
 import { db } from './config/db.js'
 import { favoritesTable } from './db/schema.js'
 import { and, eq } from 'drizzle-orm'
+import job from './config/cron.js'
 import 'colors'
 
 const app = express()
 const PORT = ENV.PORT || 8001
+
+if (ENV.NODE_ENV === 'production') job.start()
 
 app.use(express.json())
 
@@ -86,7 +89,7 @@ app.get('/api/favorites/:userId', async (req, res) => {
 
     res.status(200).json(userFavorites)
   } catch (error) {
-    console.log('Error getting favorite'.bgBlue, error)
+    console.log('Error getting favorites'.bgBlue, error)
     res.status(500).json({ error: 'Something went wrong' })
   }
 })
