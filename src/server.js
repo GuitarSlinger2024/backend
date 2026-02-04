@@ -45,6 +45,18 @@ app.post('/api/favorites', async (req, res) => {
   }
 })
 
+app.get('/api/favorites', async (req, res) => {
+  try {
+    const userFavorites = await db
+      .select()
+      .from(favoritesTable)   
+    res.json(userFavorites)
+  } catch (error) {
+    console.log('Error removing favorite', error)
+    res.status(500).json({ error: 'Something went wrong' })
+  }
+})
+
 app.get('/api/favorites/:userId', async (req, res) => {
   try {
     const { userId } = req.params
